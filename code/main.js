@@ -7,6 +7,9 @@ kaboom(
   }
 );
 
+// ein paar Konstanten
+const SPIELER_TEMPO = 400;
+
 //Sprites laden
 loadSprite("grass", "sprites/grass.png");
 loadSprite("bean", "sprites/bean.png");
@@ -47,11 +50,11 @@ scene("game", () => {
   ])
 
   keyDown("right", ()=>{
-    player.move(20,0);
+    player.move(SPIELER_TEMPO,0);
   });
 
   keyDown("left", ()=>{
-    player.move(-20,0);
+    player.move(-SPIELER_TEMPO,0);
   });
 
   keyDown("space", () => {

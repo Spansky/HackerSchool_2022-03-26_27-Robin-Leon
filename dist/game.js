@@ -2914,6 +2914,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   no({
     background: [166, 209, 247]
   });
+  var SPIELER_TEMPO = 400;
   loadSprite("grass", "sprites/grass.png");
   loadSprite("bean", "sprites/bean.png");
   scene("game", () => {
@@ -2945,10 +2946,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       "player"
     ]);
     keyDown("right", () => {
-      player.move(20, 0);
+      player.move(SPIELER_TEMPO, 0);
     });
     keyDown("left", () => {
-      player.move(-20, 0);
+      player.move(-SPIELER_TEMPO, 0);
     });
     keyDown("space", () => {
       if (player.grounded()) {
