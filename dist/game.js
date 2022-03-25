@@ -2938,7 +2938,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("grass", "sprites/grass.png");
   loadSprite("bean", "sprites/bean.png");
   loadSprite("ghosty", "sprites/ghosty.png");
-  scene("game", () => {
+  scene("game", ({ score }) => {
     const levels = [
       [
         "                                        ",
@@ -2973,6 +2973,15 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       body(),
       "player"
     ]);
+    const scoreLabel = add([
+      pos(0, 0),
+      fixed(),
+      text("Score: " + score, { size: 40 })
+    ]);
+    const increaseScore = /* @__PURE__ */ __name(() => {
+      score = score + 1;
+      scoreLabel.text = "Score: " + score;
+    }, "increaseScore");
     keyDown("right", () => {
       player.move(SPIELER_TEMPO, 0);
     });
@@ -3000,6 +3009,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       }
     });
   });
-  go("game");
+  go("game", { score: 0 });
 })();
 //# sourceMappingURL=game.js.map

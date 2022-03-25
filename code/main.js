@@ -18,7 +18,7 @@ loadSprite("bean", "sprites/bean.png");
 loadSprite("ghosty", "sprites/ghosty.png");
 
 //Szene erstellen: game
-scene("game", () => {
+scene("game", ({score}) => {
   const levels = [
    [
       "                                        ",
@@ -59,6 +59,18 @@ scene("game", () => {
     "player"
   ])
 
+  // Score anzeigen
+  const scoreLabel = add([
+    pos(0,0),
+    fixed(),
+    text("Score: " + score, {size: 40}),
+  ]);
+
+  const increaseScore = () => {
+    score = score+1;
+    scoreLabel.text = "Score: " + score;
+  };
+
   keyDown("right", ()=>{
     player.move(SPIELER_TEMPO,0);
   });
@@ -96,4 +108,4 @@ scene("game", () => {
 });
 
 // Das Spiel starten
-go("game");
+go("game", {score: 0});
