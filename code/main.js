@@ -1,4 +1,5 @@
 import kaboom from "kaboom"
+import patrol from "./patrol"
 
 kaboom(
   {
@@ -42,6 +43,7 @@ scene("game", () => {
       sprite("ghosty"),
       area(),
       body(),
+      patrol(),
       "enemy"
     ]
   }

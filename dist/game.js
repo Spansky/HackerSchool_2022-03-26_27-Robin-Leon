@@ -2910,6 +2910,25 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     return ye;
   }, "default");
 
+  // code/patrol.js
+  function patrol(speed = 60, dir = 1) {
+    return {
+      id: "patrol",
+      require: ["pos", "area"],
+      add() {
+        this.on("collide", (obj, col) => {
+          if (col.isLeft() || col.isRight()) {
+            dir = -dir;
+          }
+        });
+      },
+      update() {
+        this.move(speed * dir, 0);
+      }
+    };
+  }
+  __name(patrol, "patrol");
+
   // code/main.js
   no({
     background: [166, 209, 247]
@@ -2942,6 +2961,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         sprite("ghosty"),
         area(),
         body(),
+        patrol(),
         "enemy"
       ]
     };
