@@ -48,7 +48,12 @@ scene("game", () => {
 
   keyDown("right", ()=>{
     player.move(20,0);
-  })
+  });
+
+  keyDown("left", ()=>{
+    player.move(-20,0);
+  });
+  
 });
 
 // Das Spiel starten
