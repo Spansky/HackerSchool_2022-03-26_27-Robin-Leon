@@ -37,6 +37,7 @@ scene("game", () => {
 
   //Level laden
   addLevel(levels[0], levelConfig);
+  
   const player = add([
     sprite("bean"),
     pos(0,0),
@@ -44,6 +45,10 @@ scene("game", () => {
     body(),
     "player"
   ])
+
+  keyDown("right", ()=>{
+    player.move(20,0);
+  })
 });
 
 // Das Spiel starten
