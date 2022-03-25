@@ -83,6 +83,15 @@ scene("game", () => {
       player.destroy();
     }
   })
+
+   player.collides("enemy", (enemy) => {
+    if(player.grounded()){
+      player.destroy();
+    }
+    else {
+      enemy.destroy();
+    }
+  });
   
 });
 
