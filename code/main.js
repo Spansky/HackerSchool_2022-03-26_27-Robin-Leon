@@ -102,6 +102,7 @@ scene("game", ({score}) => {
     }
     else {
       enemy.destroy();
+      increaseScore();
     }
   });
   

@@ -3006,6 +3006,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         player.destroy();
       } else {
         enemy.destroy();
+        increaseScore();
       }
     });
   });
