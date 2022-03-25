@@ -2910,136 +2910,31 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     return ye;
   }, "default");
 
-  // code/patrol.js
-  function patrol(speed = 60, dir = 1) {
-    return {
-      id: "patrol",
-      require: ["pos", "area"],
-      add() {
-        this.on("collide", (obj, col) => {
-          if (col.isLeft() || col.isRight()) {
-            dir = -dir;
-          }
-        });
-      },
-      update() {
-        this.move(speed * dir, 0);
-      }
-    };
-  }
-  __name(patrol, "patrol");
-
   // code/main.js
   no({
-    background: [166, 209, 247],
-    burp: true
+    background: [166, 209, 247]
   });
-  var MOVE_SPEED = 400;
-  var GAME_OVER = 6 * 64;
-  loadSprite("bean", "sprites/bean.png");
   loadSprite("grass", "sprites/grass.png");
-  loadSprite("ghosty", "sprites/ghosty.png");
-  loadSprite("coin", "sprites/coin.png");
-  scene("game", ({ score }) => {
+  scene("game", () => {
     const levels = [
       [
         "                                        ",
-        "      C        C              C         ",
-        "      =      ==             ===         ",
+        "    =                                   ",
         "                                        ",
-        "    = =  =   G  =    ===    = G   =   G=",
-        "=======  ========  =======  ============"
+        "                                        ",
+        "    ==================   ======   ======",
+        "                                        "
       ]
     ];
     const levelConfig = {
       width: 64,
       height: 64,
       "=": () => [
-        sprite("grass"),
-        area(),
-        solid()
-      ],
-      "G": () => [
-        sprite("ghosty"),
-        area(),
-        body(),
-        "enemy",
-        patrol()
-      ],
-      "C": () => [
-        sprite("coin"),
-        area(),
-        "coin"
+        sprite("grass")
       ]
     };
     addLevel(levels[0], levelConfig);
-    const player = add([
-      sprite("bean"),
-      pos(0, 0),
-      area(),
-      body(),
-      "player"
-    ]);
-    const scoreLabel = add([
-      pos(0, 0),
-      fixed(),
-      text("Score: " + score, { size: 40 })
-    ]);
-    function increaseScore(point) {
-      score = score + point;
-      scoreLabel.text = "Score: " + score;
-    }
-    __name(increaseScore, "increaseScore");
-    keyDown("B", () => {
-      burp();
-    });
-    keyDown("right", () => {
-      player.move(MOVE_SPEED, 0);
-    });
-    keyDown("left", () => {
-      player.move(-MOVE_SPEED, 0);
-    });
-    keyDown("up", () => {
-      if (player.grounded()) {
-        player.jump();
-      }
-    });
-    onUpdate(() => {
-      camPos(player.pos);
-    });
-    onUpdate("player", () => {
-      if (player.pos.y > GAME_OVER) {
-        player.destroy();
-        go("gameover");
-      }
-    });
-    player.collides("enemy", (enemy) => {
-      if (player.grounded()) {
-        player.destroy();
-        go("gameover");
-      } else {
-        enemy.destroy();
-        increaseScore(2);
-      }
-    });
-    player.collides("coin", (coin) => {
-      coin.destroy();
-      increaseScore(1);
-    });
   });
-  scene("gameover", () => {
-    add([
-      fixed(),
-      pos(0, 0),
-      rect(width(), height()),
-      color(0, 0, 0)
-    ]), add([
-      fixed(),
-      pos(width() / 2, height() / 2),
-      origin("center"),
-      text("GAME OVER")
-    ]);
-  });
-  go("game", { score: 0 });
+  go("game");
 })();
 //# sourceMappingURL=game.js.map
