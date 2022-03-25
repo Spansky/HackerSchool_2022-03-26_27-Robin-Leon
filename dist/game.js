@@ -2988,6 +2988,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       score = score + 1;
       scoreLabel.text = "Score: " + score;
     }, "increaseScore");
+    const gameOver = /* @__PURE__ */ __name(() => {
+      player.destroy();
+      go("gameOver");
+    }, "gameOver");
     keyDown("right", () => {
       player.move(SPIELER_TEMPO, 0);
     });
@@ -3004,12 +3008,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     });
     onUpdate("player", () => {
       if (player.pos.y > MAX_FREIER_FALL) {
-        player.destroy();
+        gameOver();
       }
     });
     player.collides("enemy", (enemy) => {
       if (player.grounded()) {
-        player.destroy();
+        gameOver();
       } else {
         enemy.destroy();
         increaseScore();
@@ -3019,6 +3023,19 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       coin.destroy();
       increaseScore();
     });
+  });
+  scene("gameOver", () => {
+    add([
+      fixed(),
+      pos(0, 0),
+      rect(width(), height()),
+      color(0, 0, 0)
+    ]), add([
+      fixed(),
+      pos(width() / 2, height() / 2),
+      origin("center"),
+      text("GAME OVER")
+    ]);
   });
   go("game", { score: 0 });
 })();
