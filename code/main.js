@@ -17,18 +17,29 @@ loadSprite("grass", "sprites/grass.png");
 loadSprite("bean", "sprites/bean.png");
 loadSprite("ghosty", "sprites/ghosty.png");
 loadSprite("coin", "sprites/coin.png");
+loadSprite("portal", "sprites/portal.png")
 
 //Szene erstellen: game
-scene("game", ({score}) => {
+scene("game", ({score, level}) => {
   const levels = [
-   [
+    [
+
       "                                        ",
-      "    =                    C              ",
+      "      C        C              C         ",
+      "      =      ==             ===         ",
+      "      =      ==             ===        O",
       "                                        ",
-      "              C          =       G     =",
-      "======================   ===============",
-      "                                        ",
-    ], 
+      "    = ====   G  =    ===    = G   =   G=",
+      "=======  ========  =======  ============",
+    ],
+    [
+      "                C                     ",
+      "              ====          C         ",
+      "=                      =  ====        ",
+      "==       ==                           ",
+      "===  ==   G    ===        G  ==    G =",
+      "=== ==================================="
+    ]
   ];
 
   // Alle Objekte im Spiel konfigurieren
@@ -51,12 +62,16 @@ scene("game", ({score}) => {
       sprite("coin"),
       area(),
       "coin"
-    ]
-    
+    ],
+    "O": () =>[
+      sprite("portal"),
+      area(),
+      "portal"
+    ],
   }
 
   //Level laden
-  addLevel(levels[0], levelConfig);
+  addLevel(levels[level], levelConfig);
   
   const player = add([
     sprite("bean"),
@@ -71,6 +86,13 @@ scene("game", ({score}) => {
     pos(0,0),
     fixed(),
     text("Score: " + score, {size: 40}),
+  ]);
+
+  // Level anzeigen
+  add([
+    pos(0,50),
+    fixed(),
+    text("Level: " + level, {size: 40}),
   ]);
 
   const increaseScore = () => {
@@ -124,7 +146,10 @@ scene("game", ({score}) => {
     coin.destroy();
     increaseScore();
   });
-  
+
+  player.collides("portal", () => {
+    go("game", {score: score, level: level + 1})
+  });
 });
 
 //Szene: Game Over
@@ -143,4 +168,4 @@ scene("gameOver", () => {
   ])
 })
 // Das Spiel starten
-go("game", {score: 0});
+go("game", {score: 0, level: 0});
