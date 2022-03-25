@@ -9,6 +9,7 @@ kaboom(
 
 //Sprites laden
 loadSprite("grass", "sprites/grass.png");
+loadSprite("bean", "sprites/bean.png");
 
 //Szene erstellen: game
 scene("game", () => {
@@ -34,6 +35,13 @@ scene("game", () => {
 
   //Level laden
   addLevel(levels[0], levelConfig);
+  const player = add([
+    sprite("bean"),
+    pos(0,0),
+    area(),
+    body(),
+    "player"
+  ])
 });
 
 // Das Spiel starten

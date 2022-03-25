@@ -2915,6 +2915,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     background: [166, 209, 247]
   });
   loadSprite("grass", "sprites/grass.png");
+  loadSprite("bean", "sprites/bean.png");
   scene("game", () => {
     const levels = [
       [
@@ -2934,6 +2935,13 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       ]
     };
     addLevel(levels[0], levelConfig);
+    const player = add([
+      sprite("bean"),
+      pos(0, 0),
+      area(),
+      body(),
+      "player"
+    ]);
   });
   go("game");
 })();
