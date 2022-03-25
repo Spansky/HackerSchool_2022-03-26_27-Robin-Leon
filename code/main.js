@@ -16,15 +16,16 @@ const MAX_FREIER_FALL = 6 * 64;
 loadSprite("grass", "sprites/grass.png");
 loadSprite("bean", "sprites/bean.png");
 loadSprite("ghosty", "sprites/ghosty.png");
+loadSprite("coin", "sprites/coin.png");
 
 //Szene erstellen: game
 scene("game", ({score}) => {
   const levels = [
    [
       "                                        ",
-      "    =                                   ",
+      "    =                    C              ",
       "                                        ",
-      "                         =       G     =",
+      "              C          =       G     =",
       "======================   ===============",
       "                                        ",
     ], 
@@ -45,7 +46,13 @@ scene("game", ({score}) => {
       body(),
       patrol(),
       "enemy"
+    ],
+    "C": () => [
+      sprite("coin"),
+      area(),
+      "coin"
     ]
+    
   }
 
   //Level laden
@@ -96,7 +103,7 @@ scene("game", ({score}) => {
     }
   })
 
-   player.collides("enemy", (enemy) => {
+  player.collides("enemy", (enemy) => {
     if(player.grounded()){
       player.destroy();
     }
@@ -104,6 +111,12 @@ scene("game", ({score}) => {
       enemy.destroy();
       increaseScore();
     }
+  });
+
+  // Spieler berührt Coin
+  player.collides("coin", (coin) => {
+    coin.destroy();
+    increaseScore();
   });
   
 });

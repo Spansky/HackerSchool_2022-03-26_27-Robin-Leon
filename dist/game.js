@@ -2938,13 +2938,14 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("grass", "sprites/grass.png");
   loadSprite("bean", "sprites/bean.png");
   loadSprite("ghosty", "sprites/ghosty.png");
+  loadSprite("coin", "sprites/coin.png");
   scene("game", ({ score }) => {
     const levels = [
       [
         "                                        ",
-        "    =                                   ",
+        "    =                    C              ",
         "                                        ",
-        "                         =       G     =",
+        "              C          =       G     =",
         "======================   ===============",
         "                                        "
       ]
@@ -2963,6 +2964,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         body(),
         patrol(),
         "enemy"
+      ],
+      "C": () => [
+        sprite("coin"),
+        area(),
+        "coin"
       ]
     };
     addLevel(levels[0], levelConfig);
@@ -3008,6 +3014,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         enemy.destroy();
         increaseScore();
       }
+    });
+    player.collides("coin", (coin) => {
+      coin.destroy();
+      increaseScore();
     });
   });
   go("game", { score: 0 });
