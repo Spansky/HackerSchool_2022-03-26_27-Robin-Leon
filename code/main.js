@@ -9,6 +9,7 @@ kaboom(
 
 // ein paar Konstanten
 const SPIELER_TEMPO = 400;
+const MAX_FREIER_FALL = 6 * 64;
 
 //Sprites laden
 loadSprite("grass", "sprites/grass.png");
@@ -67,6 +68,12 @@ scene("game", () => {
   onUpdate(() => {
     camPos(player.pos);
   });
+
+  onUpdate("player", () => {
+    if(player.pos.y > MAX_FREIER_FALL) {
+      player.destroy();
+    }
+  })
   
 });
 

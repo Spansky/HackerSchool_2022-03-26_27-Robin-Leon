@@ -2915,6 +2915,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     background: [166, 209, 247]
   });
   var SPIELER_TEMPO = 400;
+  var MAX_FREIER_FALL = 6 * 64;
   loadSprite("grass", "sprites/grass.png");
   loadSprite("bean", "sprites/bean.png");
   scene("game", () => {
@@ -2958,6 +2959,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     });
     onUpdate(() => {
       camPos(player.pos);
+    });
+    onUpdate("player", () => {
+      if (player.pos.y > MAX_FREIER_FALL) {
+        player.destroy();
+      }
     });
   });
   go("game");
