@@ -14,6 +14,7 @@ const MAX_FREIER_FALL = 6 * 64;
 //Sprites laden
 loadSprite("grass", "sprites/grass.png");
 loadSprite("bean", "sprites/bean.png");
+loadSprite("ghosty", "sprites/ghosty.png");
 
 //Szene erstellen: game
 scene("game", () => {
@@ -22,8 +23,8 @@ scene("game", () => {
       "                                        ",
       "    =                                   ",
       "                                        ",
-      "                                        ",
-      "======================   ======   ======",
+      "                         =       G     =",
+      "======================   ===============",
       "                                        ",
     ], 
   ];
@@ -36,6 +37,12 @@ scene("game", () => {
       sprite("grass"),
       area(),
       solid(),
+    ],
+    "G": () => [
+      sprite("ghosty"),
+      area(),
+      body(),
+      "enemy"
     ]
   }
 

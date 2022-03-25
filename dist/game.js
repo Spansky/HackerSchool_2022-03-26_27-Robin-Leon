@@ -2918,14 +2918,15 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var MAX_FREIER_FALL = 6 * 64;
   loadSprite("grass", "sprites/grass.png");
   loadSprite("bean", "sprites/bean.png");
+  loadSprite("ghosty", "sprites/ghosty.png");
   scene("game", () => {
     const levels = [
       [
         "                                        ",
         "    =                                   ",
         "                                        ",
-        "                                        ",
-        "======================   ======   ======",
+        "                         =       G     =",
+        "======================   ===============",
         "                                        "
       ]
     ];
@@ -2936,6 +2937,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         sprite("grass"),
         area(),
         solid()
+      ],
+      "G": () => [
+        sprite("ghosty"),
+        area(),
+        body(),
+        "enemy"
       ]
     };
     addLevel(levels[0], levelConfig);
