@@ -62,6 +62,11 @@ scene("game", () => {
       player.jump();
     }
   });
+
+  // Kamera auf Spielfigur ausrichten
+  onUpdate(() => {
+    camPos(player.pos);
+  });
   
 });
 
