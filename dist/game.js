@@ -2923,7 +2923,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         "    =                                   ",
         "                                        ",
         "                                        ",
-        "    ==================   ======   ======",
+        "======================   ======   ======",
         "                                        "
       ]
     ];
@@ -2931,7 +2931,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       width: 64,
       height: 64,
       "=": () => [
-        sprite("grass")
+        sprite("grass"),
+        area(),
+        solid()
       ]
     };
     addLevel(levels[0], levelConfig);
