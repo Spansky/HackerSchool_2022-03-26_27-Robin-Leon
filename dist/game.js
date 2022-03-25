@@ -2950,6 +2950,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     keyDown("left", () => {
       player.move(-20, 0);
     });
+    keyDown("space", () => {
+      if (player.grounded()) {
+        player.jump();
+      }
+    });
   });
   go("game");
 })();

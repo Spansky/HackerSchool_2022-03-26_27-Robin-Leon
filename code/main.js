@@ -53,6 +53,12 @@ scene("game", () => {
   keyDown("left", ()=>{
     player.move(-20,0);
   });
+
+  keyDown("space", () => {
+    if(player.grounded()){
+      player.jump();
+    }
+  });
   
 });
 
