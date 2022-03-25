@@ -3034,6 +3034,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       rect(width(), height()),
       color(0, 0, 0)
     ]), add([
+      fixed(),
+      pos(width() / 2, height() / 2),
+      origin("center"),
       text("GAME OVER")
     ]);
   });
