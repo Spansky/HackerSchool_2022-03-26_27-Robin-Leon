@@ -1,5 +1,4 @@
 import kaboom from "kaboom"
-import patrol from "./patrol"
 
 kaboom(
   {
@@ -8,38 +7,20 @@ kaboom(
   }
 );
 
-// ein paar Konstanten
-const SPIELER_TEMPO = 400;
-const MAX_FREIER_FALL = 6 * 64;
-
 //Sprites laden
 loadSprite("grass", "sprites/grass.png");
-loadSprite("bean", "sprites/bean.png");
-loadSprite("ghosty", "sprites/ghosty.png");
-loadSprite("coin", "sprites/coin.png");
-loadSprite("portal", "sprites/portal.png")
 
 //Szene erstellen: game
-scene("game", ({score, level}) => {
+scene("game", () => {
   const levels = [
-    [
-
+   [
       "                                        ",
-      "      C        C              C         ",
-      "      =      ==             ===         ",
-      "      =      ==             ===        O",
+      "    =                                   ",
       "                                        ",
-      "    = ====   G  =    ===    = G   =   G=",
-      "=======  ========  =======  ============",
-    ],
-    [
-      "                C                     ",
-      "              ====          C         ",
-      "=                      =  ====        ",
-      "==       ==                           ",
-      "===  ==   G    ===        G  ==    G =",
-      "=== ==================================="
-    ]
+      "                                        ",
+      "    ==================   ======   ======",
+      "                                        ",
+    ], 
   ];
 
   // Alle Objekte im Spiel konfigurieren
@@ -47,125 +28,13 @@ scene("game", ({score, level}) => {
     width: 64,
     height: 64,
     "=": () => [
-      sprite("grass"),
-      area(),
-      solid(),
-    ],
-    "G": () => [
-      sprite("ghosty"),
-      area(),
-      body(),
-      patrol(),
-      "enemy"
-    ],
-    "C": () => [
-      sprite("coin"),
-      area(),
-      "coin"
-    ],
-    "O": () =>[
-      sprite("portal"),
-      area(),
-      "portal"
-    ],
+      sprite("grass")
+    ]
   }
 
   //Level laden
-  addLevel(levels[level], levelConfig);
-  
-  const player = add([
-    sprite("bean"),
-    pos(0,0),
-    area(),
-    body(),
-    "player"
-  ])
-
-  // Score anzeigen
-  const scoreLabel = add([
-    pos(0,0),
-    fixed(),
-    text("Score: " + score, {size: 40}),
-  ]);
-
-  // Level anzeigen
-  add([
-    pos(0,50),
-    fixed(),
-    text("Level: " + level, {size: 40}),
-  ]);
-
-  const increaseScore = () => {
-    score = score+1;
-    scoreLabel.text = "Score: " + score;
-  };
-
-  // Wiederverwendbare Funktion zum Beenden des Spiels
-  const gameOver = () => {
-    player.destroy();
-    go("gameOver");
-  }
-
-  keyDown("right", ()=>{
-    player.move(SPIELER_TEMPO,0);
-  });
-
-  keyDown("left", ()=>{
-    player.move(-SPIELER_TEMPO,0);
-  });
-
-  keyDown("space", () => {
-    if(player.grounded()){
-      player.jump();
-    }
-  });
-
-  // Kamera auf Spielfigur ausrichten
-  onUpdate(() => {
-    camPos(player.pos);
-  });
-
-  onUpdate("player", () => {
-    if(player.pos.y > MAX_FREIER_FALL) {
-      gameOver();
-    }
-  })
-
-  player.collides("enemy", (enemy) => {
-    if(player.grounded()){
-      gameOver();
-    }
-    else {
-      enemy.destroy();
-      increaseScore();
-    }
-  });
-
-  // Spieler berührt Coin
-  player.collides("coin", (coin) => {
-    coin.destroy();
-    increaseScore();
-  });
-
-  player.collides("portal", () => {
-    go("game", {score: score, level: level + 1})
-  });
+  addLevel(levels[0], levelConfig);
 });
 
-//Szene: Game Over
-scene("gameOver", () => {
-  add([
-    fixed(),
-    pos(0,0),
-    rect(width(), height()),
-    color(0,0,0)
-  ]),
-  add([
-    fixed(),
-    pos(width()/2, height()/2),
-    origin("center"),
-    text("GAME OVER")
-  ])
-})
 // Das Spiel starten
-go("game", {score: 0, level: 0});
+go("game");
